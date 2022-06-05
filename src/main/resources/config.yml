@@ -1,0 +1,21 @@
+database:
+  type: "sqlite"
+  mysql:
+    address: "localhost:3306"
+    username: "root"
+    password: ""
+    database: "test"
+  sqlite:
+    file: "database/spawnershop.sql"
+
+ranking:
+  debug: true
+  flushTime: 1 #Tempo em minutos, default: 30
+
+spawners:
+  porco:
+    name: "PIG"
+    price: 100000
+  vaca:
+    name: "COW"
+    price: 1000000

@@ -19,6 +19,7 @@ repositories {
     maven { url('https://jitpack.io/') }
     maven { url('https://repo.lucko.me/') }
     maven { url = 'https://repo.codemc.org/repository/maven-public/' }
+    maven { url = 'https://repo.extendedclip.com/content/repositories/placeholderapi/'}
 
 }
 
@@ -29,13 +30,16 @@ dependencies {
     compileOnly fileTree('libs')
     compileOnly('me.lucko:helper:5.6.10')
     compileOnly 'com.github.milkbowl:vault:1.7.3'
+    compileOnly 'me.clip:placeholderapi:2.10.9'
 
+    implementation ('com.github.DevNatan:inventory-framework:2.5')
+    implementation 'com.github.HenryFabio:sql-provider:9561f20fd2'
     implementation 'de.tr7zw:item-nbt-api:2.9.2'
 
 
     // spigot
 
-    compileOnly 'org.spigotmc:spigot-api:1.12-R0.1-SNAPSHOT'
+    compileOnly 'org.spigotmc:spigot-api:1.8.8-R0.1-SNAPSHOT'
 
     // annotations
 
@@ -47,7 +51,7 @@ dependencies {
 
 shadowJar {
     archiveName("${project.name}-${project.version}.jar")
-    relocate('me.saiintbrisson.minecraft', 'com.redeseason.spawneshop.libs.view')
+    relocate('me.saiintbrisson.minecraft', 'com.redeseason.spawnershop.libs.view')
 
 }
 

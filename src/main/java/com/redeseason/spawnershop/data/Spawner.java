@@ -21,6 +21,7 @@ public class Spawner {
 
         return new ItemLibrary(Material.SKULL_ITEM)
                 .owner("MHF_" + spawner.getName())
+                .data(3)
                 .name("§aGerador de " + EntityUtil.valueOf(spawner.getName()).getName())
                 .lore(
                         "§7Coloque este gerador em sua plot",

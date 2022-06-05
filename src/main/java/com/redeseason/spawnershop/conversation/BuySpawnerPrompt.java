@@ -1,7 +1,9 @@
 package com.redeseason.spawnershop.conversation;
 
+import com.redeseason.spawnershop.data.Spawner;
 import com.redeseason.spawnershop.data.SpawnerShopUser;
 import com.redeseason.spawnershop.hook.EconomyHookProvider;
+import org.bukkit.Bukkit;
 import org.bukkit.conversations.ConversationContext;
 import org.bukkit.conversations.NumericPrompt;
 import org.bukkit.conversations.Prompt;
@@ -28,8 +30,8 @@ public class BuySpawnerPrompt extends NumericPrompt {
             player.sendMessage(new String[]{
                     "",
                     "§c§l  OPS!",
-                    "§c  Você não tem coins para comprar esta",
-                    "§c  quantia de geradores.",
+                    "§c  Você não tem coins suficientes",
+                    "§c  para comprar esta quantia de geradores.",
                     ""
             });
 
@@ -37,9 +39,23 @@ public class BuySpawnerPrompt extends NumericPrompt {
 
         }
 
-        EconomyHookProvider.getEconomy().withdrawPlayer(player.getName(), input.doubleValue());
+        Double moneyToRemove = input.doubleValue() * user.getBuyingSpawner().getValue();
 
+        EconomyHookProvider.getEconomy().withdrawPlayer(player.getName(), moneyToRemove);
+        Bukkit.dispatchCommand(
+                Bukkit.getConsoleSender(),
+                "spawneradmin give " + player.getName() + " " + user.getBuyingSpawner().getName() + " 1"
+        );
 
-        return null;
+        player.sendMessage(new String[] {
+                "",
+                "§a§l GG!§f Você comprou §7" + input.doubleValue() + "Gerador de " + user.getBuyingSpawner().getName() + "",
+                "§f  por §7" + NumberLibrary.format(moneyToRemove) +"§f coins.",
+                ""
+        });
+
+        user.setBuyingSpawner(null);
+
+        return END_OF_CONVERSATION;
     }
 }

@@ -9,5 +9,6 @@ public class SpawnerShopUser {
 
     private String name;
     private Double limit;
+    private Spawner buyingSpawner;
 
 }

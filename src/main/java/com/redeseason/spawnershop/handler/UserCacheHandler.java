@@ -9,29 +9,27 @@ import java.util.Map;
 
 public class UserCacheHandler {
 
-    @Getter
-    private static UserCacheHandler handler;
-    @Getter
-    private final Map<String, SpawnerShopUser> cacheMap = Maps.newLinkedHashMap();
+    @Getter private static UserCacheHandler handler;
+    @Getter private final Map<String, SpawnerShopUser> cacheMap = Maps.newLinkedHashMap();
 
     public SpawnerShopUser getUser(String name) {
         return cacheMap.get(name);
 
     }
 
-    public void loadAll() {
-
-        SpawnerShopRepository repository = new SpawnerShopRepository();
-
-        handler = this;
-        repository.selectAll().forEach(this::insertCache);
-
-    }
-
-    private void insertCache(SpawnerShopUser user) {
+    public void insertCache(SpawnerShopUser user) {
         cacheMap.put(user.getName(), user);
 
     }
 
+    public void removeCache(SpawnerShopUser user) {
+        cacheMap.remove(user.getName(), user);
+
+    }
+
+    public void provide() {
+        handler = this;
+
+    }
 
 }

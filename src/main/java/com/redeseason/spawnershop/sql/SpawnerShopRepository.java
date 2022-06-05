@@ -9,20 +9,20 @@ import java.util.Set;
 
 public class SpawnerShopRepository {
 
-    private final String spawnerShopTable = "spawnershop";
+    private static final String spawnerShopTable = "spawnershop";
 
-    public void createTable() {
+    public static void createTable() {
 
         sqlExecutor().updateQuery(
-                "CREATE TABLE IF NOT EXISTS " + spawnerShopTable + " (" +
-                        "user VARCHAR(16) NOT NULL PRIMARY KEY," +
-                        "limit DOUBLE NOT NULL" +
+                "CREATE TABLE IF NOT EXISTS " + spawnerShopTable + "(" +
+                        "playerName VARCHAR(16) NOT NULL PRIMARY KEY," +
+                        "limit_value DOUBLE NOT NULL" +
                         ");"
         );
 
     }
 
-    public void insert(SpawnerShopUser user) {
+    public static void insert(SpawnerShopUser user) {
         sqlExecutor().updateQuery(
                 "INSERT INTO " + spawnerShopTable + " VALUES(?,?)",
                 queryConsumer -> {
@@ -34,17 +34,31 @@ public class SpawnerShopRepository {
 
     }
 
-    public Set<SpawnerShopUser> selectAll() {
-        return sqlExecutor().resultManyQuery(
-                "SELECT * FROM " + spawnerShopTable,
+    public static void replace(SpawnerShopUser user) {
+        sqlExecutor().updateQuery(
+                "REPLACE INTO " + spawnerShopTable + " VALUES(?,?)",
                 queryConsumer -> {
+                    queryConsumer.set(1, user.getName());
+                    queryConsumer.set(2, user.getLimit());
+
+                }
+        );
+
+    }
+
+
+    public static SpawnerShopUser select(String name) {
+        return sqlExecutor().resultOneQuery(
+                "SELECT * FROM " + spawnerShopTable + " WHERE playerName = ?",
+                queryConsumer -> {
+                    queryConsumer.set(1, name);
                 },
                 SpawnerShopAdapter.class
         );
 
     }
 
-    private SQLExecutor sqlExecutor() {
+    private static SQLExecutor sqlExecutor() {
         return new SQLExecutor(SpawnerShopPlugin.getInstance().getRepositoryConnector());
     }
 

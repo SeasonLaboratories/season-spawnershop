@@ -9,8 +9,8 @@ public class SpawnerShopAdapter implements SQLResultAdapter<SpawnerShopUser> {
     @Override
     public SpawnerShopUser adaptResult(SimpleResultSet resultSet) {
         return SpawnerShopUser.builder()
-                .name(resultSet.get("user"))
-                .limit(resultSet.get("limit"))
+                .name(resultSet.get("playerName"))
+                .limit(resultSet.get("limit_value"))
                 .build();
     }
 }
