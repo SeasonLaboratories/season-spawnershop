@@ -1,6 +1,6 @@
 plugins {
     id 'java'
-    id 'com.github.johnrengelman.shadow' version '7.0.0'
+    id 'com.github.johnrengelman.shadow' version '6.0.0'
 }
 
 group = 'so.ayo.afterzin'
@@ -9,17 +9,35 @@ version = '1.0-SNAPSHOT'
 repositories {
     mavenCentral()
 
+    // spigot
+
     maven {url = 'https://hub.spigotmc.org/nexus/content/repositories/snapshots/' }
     maven { url('https://oss.sonatype.org/content/groups/public/') }
+
+    // libs
+
     maven { url('https://jitpack.io/') }
     maven { url('https://repo.lucko.me/') }
+    maven { url = 'https://repo.codemc.org/repository/maven-public/' }
+
 }
 
 dependencies {
+
+    // libs
+
     compileOnly fileTree('libs')
     compileOnly('me.lucko:helper:5.6.10')
+    compileOnly 'com.github.milkbowl:vault:1.7.3'
+
+    implementation 'de.tr7zw:item-nbt-api:2.9.2'
+
+
+    // spigot
+
     compileOnly 'org.spigotmc:spigot-api:1.12-R0.1-SNAPSHOT'
 
+    // annotations
 
     def lombok = 'org.projectlombok:lombok:1.18.24'
     def annotations = 'org.jetbrains:annotations:23.0.0'
@@ -29,6 +47,8 @@ dependencies {
 
 shadowJar {
     archiveName("${project.name}-${project.version}.jar")
+    relocate('me.saiintbrisson.minecraft', 'com.redeseason.spawneshop.libs.view')
+
 }
 
 tasks {
